@@ -6,7 +6,7 @@ from pathlib import Path
 import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-print(BASE_DIR)
+
 # propylon_document_manager/
 APPS_DIR = BASE_DIR
 env = environ.Env()
