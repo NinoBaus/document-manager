@@ -24,6 +24,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.idea/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -273,6 +274,9 @@ dump.rdb
 
 ### Project template
 propylon_document_manager/media/
+
+# user-uploaded media files
+src/propylon_document_manager/media/
 
 .pytest_cache/
 
