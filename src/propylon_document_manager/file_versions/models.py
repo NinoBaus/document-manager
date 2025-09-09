@@ -1,8 +1,29 @@
+import os
+import hashlib
+import re
+
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, EmailField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
+
+from .managers import UserManager
+
+
+def validate_path(value):
+    if not value:
+        return value
+
+    pattern = r'^[a-zA-Z0-9/_-]+$'
+    if not re.match(pattern, value):
+        raise ValidationError("Path can only contain letters, numbers, /, _, and -")
+    if ".." in value or "//" in value:
+        raise ValidationError("Invalid path structure.")
+    return value
+
 
 class User(AbstractUser):
     """
@@ -21,6 +42,8 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
+    objects = UserManager()
+
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.
 
@@ -31,6 +54,35 @@ class User(AbstractUser):
         return reverse("users:detail", kwargs={"pk": self.id})
 
 
+def user_directory_path(instance, filename):
+    path = f'{str(instance.user.id)}/{instance.path}'
+    return os.path.join(path, filename)
+
+
 class FileVersion(models.Model):
-    file_name = models.fields.CharField(max_length=512)
-    version_number = models.fields.IntegerField()
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="file_versions"
+    )
+    file = models.FileField(upload_to=user_directory_path)
+    file_name = models.CharField(max_length=512)
+    path = models.CharField(max_length=1024, validators=[validate_path], blank=True)
+    revision = models.IntegerField(default=1)
+    content_hash = models.CharField(max_length=64, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("path", "revision", "user")
+        ordering = ["-created_at"]
+
+    def save(self, *args, **kwargs):
+        if not self.content_hash and self.file:
+            sha256 = hashlib.sha256()
+            for chunk in self.file.chunks():
+                sha256.update(chunk)
+            self.content_hash = sha256.hexdigest()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.file_name} (v{self.revision}) by {self.user.email}"

@@ -12,7 +12,7 @@ urlpatterns = [
     path("api/", include("propylon_document_manager.site.api_router")),
     # DRF auth token
     path("api-auth/", include("rest_framework.urls")),
-    path("auth-token/", obtain_auth_token),
+    path("", include("propylon_document_manager.file_versions.urls")),
 ]
 
 if settings.DEBUG:

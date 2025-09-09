@@ -34,7 +34,7 @@ env_update: $(ENV_DIR) requirements
 # ======================
 # Testing and Linting
 # ======================
-test: build plain-test
+test: build docker-up wait-for-db plain-test
 
 plain-test:
 	$(IN_ENV) py.test
@@ -71,10 +71,16 @@ build-reqs: env
 build: build-reqs
 	$(IN_ENV) pip install -e .
 
-plain-serve:
-	$(IN_ENV) django-admin runserver 0.0.0.0:8001
+docker-up:
+	docker-compose up -d
 
-serve: build makemigrations migrate plain-serve
+wait-for-db:
+	until docker exec pglocal pg_isready -U username; do sleep 1; done
+
+plain-serve:
+	$(IN_ENV) django-admin runserver
+
+serve: build makemigrations migrate docker-up wait-for-db plain-serve
 
 # ============================
 # Database & Fixture Utilities

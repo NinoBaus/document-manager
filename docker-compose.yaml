@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 8090:80
+    depends_on:
+      - pglocal
+    networks:
+      - fileversion
+
+
+  pglocal:
+    container_name: pglocal
+    image: postgres:15
+    restart: always
+    environment:
+    - POSTGRES_USER=${DB_USERNAME:-username}
+    - POSTGRES_PASSWORD=${DB_PASSWORD:-password}
+    - POSTGRES_DB=${DB_NAME:-master}
+    volumes:
+      - pgmaster_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - fileversion
+
+networks:
+  fileversion:
+    driver: bridge
+    name: fileversion
+
+volumes:
+  pgmaster_data:

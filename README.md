@@ -14,3 +14,27 @@ See the Readme [here](https://github.com/propylon/document-manager-assessment/bl
 
 ##
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
+
+## Developers Notes
+
+### DataBase
+The project is expanded with Postman database and PG_ADMIN service for querying data from database.
+Database is started through docker-compose file and is implemented in the make file
+
+### Running the project
+In order to run project you can use make file as shown above in documentation. Make files are just updated to be able to run docker-compose before running the application.
+Before server is started with `$ make serve` command, it will wait for database container to be started, and only then it should start the server.
+
+### Unittests
+You can run unittests with make file:
+`$ make test` This command will run the tests, but before that it will wait for database container to be started.
+
+### Endpoints
+1. POST - api/register/ - Allows User to register via email
+2. POST - api/authauth-token/ - Added custom login that returns token for API users when they provide correct email and password
+3. GET - api/file-versions/ - Allows user to fetch files he uploaded
+4. POST - api/file-version/ - Allows user to add files by providing file and path
+5. GET - api/file-version/<file-id> - Allows user to fetch resources for specific file
+6. GET - dir/<file-path>/<file-name>?revision=<rev_number> - Allows user to download specific file from specified route and specified revision or latest file when revision is not provided
+7. GET - cas/content_hash - Allows user to fetch file with specific hash as a resource, or the list of multiple files with that same hash
+

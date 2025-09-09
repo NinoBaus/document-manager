@@ -6,6 +6,7 @@ from pathlib import Path
 import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+print(BASE_DIR)
 # propylon_document_manager/
 APPS_DIR = BASE_DIR
 env = environ.Env()
@@ -46,8 +47,11 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "propylon_document_manager.sqlite",
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": env("DB_HOST", default="127.0.0.1"),
+        "NAME": env("DB_NAME", default="master"),
+        "USER": env("DB_USERNAME", default="username"),
+        "PASSWORD": env("DB_PASSWORD", default="password"),
     }
 }
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
@@ -74,6 +78,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
+    "allauth.account"
 ]
 
 LOCAL_APPS = [
@@ -132,6 +137,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware"
 ]
 
 # STATIC
