@@ -86,3 +86,31 @@ class FileVersion(models.Model):
 
     def __str__(self):
         return f"{self.file_name} (v{self.revision}) by {self.user.email}"
+
+
+class FilePermissions(models.Model):
+    READ = "read"
+    READ_WRITE = "read_write"
+    PERMISSION_CHOICES = [
+        (READ, "Read"),
+        (READ_WRITE, "Read / Write"),
+    ]
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="file_permissions"
+    )
+    file = models.ForeignKey(
+        FileVersion,
+        on_delete=models.CASCADE,
+        related_name="file_permissions"
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="owned_file_permissions"
+    )
+    permissions = models.CharField(max_length=10, choices=PERMISSION_CHOICES)
+
+    class Meta:
+        unique_together = ("user", "file", "permissions")

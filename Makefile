@@ -34,7 +34,7 @@ env_update: $(ENV_DIR) requirements
 # ======================
 # Testing and Linting
 # ======================
-test: build docker-up wait-for-db plain-test
+test: docker-up wait-for-db build plain-test
 
 plain-test:
 	$(IN_ENV) py.test
@@ -80,7 +80,7 @@ wait-for-db:
 plain-serve:
 	$(IN_ENV) django-admin runserver
 
-serve: build makemigrations migrate docker-up wait-for-db plain-serve
+serve: docker-up wait-for-db build makemigrations migrate plain-serve
 
 # ============================
 # Database & Fixture Utilities

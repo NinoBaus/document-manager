@@ -1,0 +1,560 @@
+{
+	"info": {
+		"_postman_id": "5fe5f02a-fabd-4267-b402-77f375e75117",
+		"name": "FileVersion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16885791"
+	},
+	"item": [
+		{
+			"name": "File Permissions",
+			"item": [
+				{
+					"name": "Create file permissions",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"value": "{{TEST_USER_EMAIL}}",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "permissions",
+									"value": "read",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-permissions",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update file permissions",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"value": "{{TEST_USER_EMAIL}}",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "permissions",
+									"value": "read_write",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-permissions/PERMISSION_ID",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-permissions",
+								"PERMISSION_ID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get file permissions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-permissions",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get permission by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-permissions/PERMISSION_ID",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-permissions",
+								"PERMISSION_ID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete file permission",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-permissions/PERMISSION_ID",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-permissions",
+								"PERMISSION_ID"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File Versions",
+			"item": [
+				{
+					"name": "Create file",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "path",
+									"value": "random/path",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/ninoslav/Downloads/idemo"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-versions",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete file",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-versions/5",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-versions",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get files list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/file-versions",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"file-versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get file by path / name / revision",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/dir/random/path/FILE_NAME?revision=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"dir",
+								"random",
+								"path",
+								"FILE_NAME"
+							],
+							"query": [
+								{
+									"key": "revision",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get file by content hash",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/cas/b692f7569c182fadf1f3ecbb26d7bf129cc97d83c34b12edd0fd9344102d30d0",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"cas",
+								"b692f7569c182fadf1f3ecbb26d7bf129cc97d83c34b12edd0fd9344102d30d0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{EMAIL}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "John",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register test user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{TEST_USER_EMAIL}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Johny",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Auth-token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"TOKEN\", jsonData.token);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{EMAIL}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/auth-token",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"auth-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Auth-token for test user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"TOKEN\", jsonData.token);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{TEST_USER_EMAIL}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/auth-token",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"auth-token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
