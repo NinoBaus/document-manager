@@ -34,7 +34,7 @@ env_update: $(ENV_DIR) requirements
 # ======================
 # Testing and Linting
 # ======================
-test: build docker-up wait-for-db plain-test
+test: docker-up wait-for-db build plain-test
 
 plain-test:
 	$(IN_ENV) py.test

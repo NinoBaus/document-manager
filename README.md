@@ -22,8 +22,8 @@ The project is expanded with Postman database and PG_ADMIN service for querying 
 Database is started through docker-compose file and is implemented in the make file
 
 ### Running the project
-In order to run project you can use make file as shown above in documentation. Make files are just updated to be able to run docker-compose before running the application.
-Before server is started with `$ make serve` command, it will wait for database container to be started, and only then it should start the server.
+In order to run the project you can use make file as shown above in documentation. Make files are just updated to be able to run docker-compose before running the application.
+Before server is started with `$ make serve` command, it will wait for database container to be started, and only then it should apply migrations and start the server.
 
 ### Unittests
 You can run unittests with make file:
@@ -42,4 +42,11 @@ You can run unittests with make file:
 10. PUT - api/file-permissions - Allows owner to update permissions
 11. DELETE - api/file-permissions/<permission_id> - Allows owner to delete permissions
 
-#### For easier testing, I'm providing postman collection and postman environment collection in the project.
+#### Postman
+As easier way of testing API I provided postman api and environment collection in the project.
+1. Import postman collection and environment in postman.
+2. Pick new environment
+3. Use `Register` request to register user
+4. Use `Get Auth-token` request to fetch token and set it on other requests (this part is done by script and all tokens should be set on other requests)
+5. Test API
+6. For permission testing there are requests `Register test user` and `Get Auth-token for test user`. By choosing `Get Auth-token for test user` or `Get Auth-token` request, according user will be "logged in".
