@@ -34,7 +34,7 @@ You can run unittests with make file:
 2. POST - api/authauth-token/ - Added custom login that returns token for API users when they provide correct email and password
 3. GET - api/file-versions/ - Allows user to fetch files he uploaded
 4. POST - api/file-version/ - Allows user to add files by providing file and path
-5. GET - api/file-version/<file-id> - Allows user to fetch resources for specific file
-6. GET - dir/<file-path>/<file-name>?revision=<rev_number> - Allows user to download specific file from specified route and specified revision or latest file when revision is not provided
+5. GET - api/file-version/<file_id> - Allows user to fetch resources for specific file
+6. GET - dir/<file_path>/<file_name>?revision=<rev_number> - Allows user to download specific file from specified route and specified revision or latest file when revision is not provided
 7. GET - cas/content_hash - Allows user to fetch file with specific hash as a resource, or the list of multiple files with that same hash
 
