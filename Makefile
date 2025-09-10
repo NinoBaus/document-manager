@@ -80,7 +80,7 @@ wait-for-db:
 plain-serve:
 	$(IN_ENV) django-admin runserver
 
-serve: build makemigrations migrate docker-up wait-for-db plain-serve
+serve: docker-up wait-for-db build makemigrations migrate plain-serve
 
 # ============================
 # Database & Fixture Utilities

@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.http import FileResponse
+from django.db.models import Q
 
 from rest_framework.mixins import RetrieveModelMixin, ListModelMixin, CreateModelMixin, DestroyModelMixin
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -10,21 +11,37 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import FileVersion
-from .serializers import FileVersionSerializer, RegisterSerializer, EmailAuthTokenSerializer
+from ..models import FileVersion, FilePermissions
+from .serializers import FileVersionSerializer, RegisterSerializer, EmailAuthTokenSerializer, FilePermissionsSerializer
+from propylon_document_manager.utils.permissions import FileVersionPermission
 
 User = get_user_model()
 
 
 class FileVersionViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet, CreateModelMixin, DestroyModelMixin):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, FileVersionPermission]
     serializer_class = FileVersionSerializer
 
-    def get_queryset(self):
-        return FileVersion.objects.filter(user=self.request.user)
-
     lookup_field = "id"
+
+    def get_queryset(self):
+        user = self.request.user
+
+        owned_files = Q(user=user)
+        permitted_files = Q(file_permissions__user=user)
+
+        queryset = FileVersion.objects.filter(owned_files | permitted_files).distinct()
+        return queryset
+
+
+class FilePermissionsViewSet(ModelViewSet):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = FilePermissionsSerializer
+
+    def get_queryset(self):
+        return FilePermissions.objects.filter(owner=self.request.user)
 
 
 class EmailAuthToken(ObtainAuthToken):
@@ -47,7 +64,9 @@ class FileServeView(APIView):
         revision = request.query_params.get("revision")
         path, file_name = self.get_file_path_and_name(file_path)
 
-        qs = FileVersion.objects.filter(user=request.user, path=path, file_name=file_name)
+        owned_files = Q(user=request.user)
+        permitted_files = Q(file_permissions__user=request.user)
+        qs = FileVersion.objects.filter(owned_files | permitted_files).filter(path=path, file_name=file_name)
 
         if not qs.exists():
             return Response({"error": "file not found"}, status=404)
@@ -75,7 +94,9 @@ class FileCASView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, hash_value):
-        files = FileVersion.objects.filter(user=request.user, content_hash=hash_value)
+        owned_files = Q(user=request.user)
+        permitted_files = Q(file_permissions__user=request.user)
+        files = FileVersion.objects.filter(owned_files | permitted_files).filter(content_hash=hash_value)
         if not files.exists():
             return Response({"error": "No files found with this hash"}, status=404)
         serializer = FileVersionSerializer(files, many=True, context={"request": request})
