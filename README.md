@@ -35,6 +35,11 @@ You can run unittests with make file:
 3. GET - api/file-versions/ - Allows user to fetch files he uploaded
 4. POST - api/file-version/ - Allows user to add files by providing file and path
 5. GET - api/file-version/<file_id> - Allows user to fetch resources for specific file
-6. GET - dir/<file_path>/<file_name>?revision=<rev_number> - Allows user to download specific file from specified route and specified revision or latest file when revision is not provided
-7. GET - cas/content_hash - Allows user to fetch file with specific hash as a resource, or the list of multiple files with that same hash
+6. GET - api/dir/<file_path>/<file_name>?revision=<rev_number> - Allows user to download specific file from specified route and specified revision or latest file when revision is not provided
+7. GET - api/cas/content_hash - Allows user to fetch file with specific hash as a resource, or the list of multiple files with that same hash
+8. POST - api/file-permissions - Allows file owner to share file with another user and give him read or and write permissions on file
+9. GET - api/file-permissions - Allows file owner to list all given permissions
+10. PUT - api/file-permissions - Allows owner to update permissions
+11. DELETE - api/file-permissions/<permission_id> - Allows owner to delete permissions
 
+#### For easier testing, I'm providing postman collection and postman environment collection in the project.
