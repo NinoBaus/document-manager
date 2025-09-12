@@ -12,14 +12,6 @@ This application uses Postgres database that's running in docker container. This
 4. `$ make test`  this command will run docker compose to start database, and run the limited test suite via PyTest.
 5. `$ python manage.py create_user --email test@test.com --password 123456 --name "Test User"`  this command will allow you to create new user in database.
 
-### DataBase
-The project is expanded with Postman database and PG_ADMIN service for querying data from database.
-Database is started through docker-compose file and is implemented in the make file
-
-### Running the project
-In order to run the project you can use make file as shown above in documentation. Make files are just updated to be able to run docker-compose before running the application.
-Before server is started with `$ make serve` command, it will wait for database container to be started, and only then it should apply migrations and start the server.
-
 ### Unittests
 You can run unittests with make file:
 `$ make test` This command will run the tests, but before that it will wait for database container to be started.
