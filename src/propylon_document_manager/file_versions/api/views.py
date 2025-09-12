@@ -4,7 +4,7 @@ from django.db.models import Q
 
 from rest_framework.mixins import RetrieveModelMixin, ListModelMixin, CreateModelMixin, DestroyModelMixin
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ..models import FileVersion, FilePermissions
-from .serializers import FileVersionSerializer, RegisterSerializer, EmailAuthTokenSerializer, FilePermissionsSerializer
+from .serializers import FileVersionSerializer, EmailAuthTokenSerializer, FilePermissionsSerializer
 from propylon_document_manager.utils.permissions import FileVersionPermission
 
 User = get_user_model()
@@ -101,9 +101,3 @@ class FileCASView(APIView):
             return Response({"error": "No files found with this hash"}, status=404)
         serializer = FileVersionSerializer(files, many=True, context={"request": request})
         return Response(serializer.data)
-
-
-class RegisterView(GenericViewSet, CreateModelMixin):
-    permission_classes = [AllowAny]
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer

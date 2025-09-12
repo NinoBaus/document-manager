@@ -91,25 +91,6 @@ class FilePermissionsSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class RegisterSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
-    name = serializers.CharField(required=False, allow_blank=True)
-
-    def create(self, validated_data):
-        if User.objects.filter(email=validated_data["email"]).exists():
-            raise serializers.ValidationError("User already exists")
-
-        adapter = get_adapter()
-        user = adapter.new_user(request=self.context.get("request"))
-        user.email = validated_data["email"]
-        user.name = validated_data.get("name", "")
-        user.set_password(validated_data["password"])
-        user.save()
-        setup_user_email(self.context.get("request"), user, [])
-        return user
-
-
 class EmailAuthTokenSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
