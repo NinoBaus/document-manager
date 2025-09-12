@@ -68,7 +68,7 @@ collectstatic:
 build-reqs: env
 	$(IN_ENV) pip install -r requirements/dev.txt
 
-build: build-reqs
+build: build-reqs docker-up wait-for-db
 	$(IN_ENV) pip install -e .
 
 docker-up:
@@ -91,7 +91,7 @@ makemigrations:
 migrate:
 	$(IN_ENV) django-admin migrate
 
-fixture: build makemigrations migrate plain-fixture
+fixtures: docker-up wait-for-db build makemigrations migrate plain-fixture
 
 plain-fixture:
 	$(IN_ENV) django-admin load_file_fixtures

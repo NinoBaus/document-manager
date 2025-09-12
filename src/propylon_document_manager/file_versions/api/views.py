@@ -3,16 +3,18 @@ from django.http import FileResponse
 from django.db.models import Q
 
 from rest_framework.mixins import RetrieveModelMixin, ListModelMixin, CreateModelMixin, DestroyModelMixin
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import action
+from rest_framework import status
 
 from ..models import FileVersion, FilePermissions
-from .serializers import FileVersionSerializer, RegisterSerializer, EmailAuthTokenSerializer, FilePermissionsSerializer
+from .serializers import FileVersionSerializer, EmailAuthTokenSerializer, ShareFileSerializer
 from propylon_document_manager.utils.permissions import FileVersionPermission
 
 User = get_user_model()
@@ -34,14 +36,29 @@ class FileVersionViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet, Cre
         queryset = FileVersion.objects.filter(owned_files | permitted_files).distinct()
         return queryset
 
+    @action(detail=True, methods=["post"], url_path="share")
+    def share(self, request, id=None):
+        file_version = self.get_object()
+        serializer = ShareFileSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        target_email = serializer.validated_data["email"]
+        permission = serializer.validated_data["permission"]
 
-class FilePermissionsViewSet(ModelViewSet):
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-    serializer_class = FilePermissionsSerializer
+        if target_email == request.user.email:
+            return Response({"detail": "You are trying to share file to yourself."}, status=status.HTTP_400_BAD_REQUEST)
 
-    def get_queryset(self):
-        return FilePermissions.objects.filter(owner=self.request.user)
+        User = get_user_model()
+        try:
+            target_user = User.objects.get(email=target_email)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found"}, status=status.HTTP_400_BAD_REQUEST)
+
+        FilePermissions.objects.update_or_create(
+            user=target_user,
+            file=file_version,
+            defaults={"owner": request.user, "permissions": permission},
+        )
+        return Response({"detail": f"File shared with {target_email}"})
 
 
 class EmailAuthToken(ObtainAuthToken):
@@ -101,9 +118,3 @@ class FileCASView(APIView):
             return Response({"error": "No files found with this hash"}, status=404)
         serializer = FileVersionSerializer(files, many=True, context={"request": request})
         return Response(serializer.data)
-
-
-class RegisterView(GenericViewSet, CreateModelMixin):
-    permission_classes = [AllowAny]
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
