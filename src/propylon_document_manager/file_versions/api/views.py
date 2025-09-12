@@ -3,7 +3,7 @@ from django.http import FileResponse
 from django.db.models import Q
 
 from rest_framework.mixins import RetrieveModelMixin, ListModelMixin, CreateModelMixin, DestroyModelMixin
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -11,8 +11,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import FileVersion, FilePermissions
-from .serializers import FileVersionSerializer, EmailAuthTokenSerializer, FilePermissionsSerializer
+from ..models import FileVersion
+from .serializers import FileVersionSerializer, EmailAuthTokenSerializer
 from propylon_document_manager.utils.permissions import FileVersionPermission
 
 User = get_user_model()
@@ -33,15 +33,6 @@ class FileVersionViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet, Cre
 
         queryset = FileVersion.objects.filter(owned_files | permitted_files).distinct()
         return queryset
-
-
-class FilePermissionsViewSet(ModelViewSet):
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-    serializer_class = FilePermissionsSerializer
-
-    def get_queryset(self):
-        return FilePermissions.objects.filter(owner=self.request.user)
 
 
 class EmailAuthToken(ObtainAuthToken):
