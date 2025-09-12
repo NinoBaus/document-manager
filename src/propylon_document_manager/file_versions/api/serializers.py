@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.db.models import Max
-from allauth.account.adapter import get_adapter
-from allauth.account.utils import setup_user_email
 from django.contrib.auth import authenticate
 from django.urls import reverse
 
@@ -57,38 +55,9 @@ class FileVersionSerializer(serializers.ModelSerializer):
         return ret
 
 
-class FilePermissionsSerializer(serializers.ModelSerializer):
-    user = serializers.CharField()
-    file = serializers.PrimaryKeyRelatedField(queryset=FileVersion.objects.all())
-    permissions = serializers.ChoiceField(FilePermissions.PERMISSION_CHOICES)
-
-    class Meta:
-        model = FilePermissions
-        fields = ["id", "user", "file", "permissions", 'owner']
-        read_only_fields = ['owner']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        request = self.context.get("request")
-        if request and request.user.is_authenticated:
-            self.fields["file"].queryset = FileVersion.objects.filter(user=request.user)
-
-    def validate_user(self, value):
-        try:
-            return User.objects.get(email=value)
-        except User.DoesNotExist:
-            raise serializers.ValidationError("User with this email does not exist.")
-
-    def create(self, validated_data):
-        request = self.context["request"]
-        owner = request.user
-        if validated_data["file"].user != owner:
-            raise serializers.ValidationError("You are not the Owner of selected object.")
-
-        if validated_data["file"].user == validated_data["user"]:
-            raise serializers.ValidationError("You are trying to add File permissions to the Owner.")
-        validated_data["owner"] = owner
-        return super().create(validated_data)
+class ShareFileSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    permission = serializers.ChoiceField(choices=FilePermissions.PERMISSION_CHOICES)
 
 
 class EmailAuthTokenSerializer(serializers.Serializer):

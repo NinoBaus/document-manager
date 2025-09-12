@@ -1,207 +1,11 @@
 {
 	"info": {
-		"_postman_id": "5fe5f02a-fabd-4267-b402-77f375e75117",
+		"_postman_id": "73cb0d83-2fce-4356-8697-4f3dc8aa6b20",
 		"name": "FileVersion",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "16885791"
 	},
 	"item": [
-		{
-			"name": "File Permissions",
-			"item": [
-				{
-					"name": "Create file permissions",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Token {{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "user",
-									"value": "{{TEST_USER_EMAIL}}",
-									"type": "text"
-								},
-								{
-									"key": "file",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "permissions",
-									"value": "read",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-permissions",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-permissions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update file permissions",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Token {{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "user",
-									"value": "{{TEST_USER_EMAIL}}",
-									"type": "text"
-								},
-								{
-									"key": "file",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "permissions",
-									"value": "read_write",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-permissions/PERMISSION_ID",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-permissions",
-								"PERMISSION_ID"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get file permissions",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Token {{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-permissions",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-permissions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get permission by id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Token {{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-permissions/PERMISSION_ID",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-permissions",
-								"PERMISSION_ID"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete file permission",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Token {{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-permissions/PERMISSION_ID",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-permissions",
-								"PERMISSION_ID"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
 		{
 			"name": "File Versions",
 			"item": [
@@ -230,19 +34,11 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/home/ninoslav/Downloads/idemo"
+									"src": []
 								}
 							]
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-versions",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-versions"
-							]
-						}
+						"url": "{{BASE_URL}}/file-versions"
 					},
 					"response": []
 				},
@@ -264,16 +60,7 @@
 							"mode": "formdata",
 							"formdata": []
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-versions/5",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-versions",
-								"5"
-							]
-						}
+						"url": "{{BASE_URL}}/file-versions/1"
 					},
 					"response": []
 				},
@@ -298,15 +85,41 @@
 							"mode": "formdata",
 							"formdata": []
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/file-versions",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"file-versions"
+						"url": "{{BASE_URL}}/file-versions"
+					},
+					"response": []
+				},
+				{
+					"name": "Share file",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "{{ACT_EMAIL}}",
+									"type": "text"
+								},
+								{
+									"key": "permission",
+									"value": "read",
+									"description": "read  or read_write",
+									"type": "text"
+								}
 							]
-						}
+						},
+						"url": "{{BASE_URL}}/file-versions/1/share"
 					},
 					"response": []
 				},
@@ -332,14 +145,13 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/dir/random/path/FILE_NAME?revision=1",
+							"raw": "{{BASE_URL}}/dir/FILE_PATH/FILE_NAME?revision=1",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"dir",
-								"random",
-								"path",
+								"FILE_PATH",
 								"FILE_NAME"
 							],
 							"query": [
@@ -373,97 +185,14 @@
 							"mode": "formdata",
 							"formdata": []
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/cas/b692f7569c182fadf1f3ecbb26d7bf129cc97d83c34b12edd0fd9344102d30d0",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"cas",
-								"b692f7569c182fadf1f3ecbb26d7bf129cc97d83c34b12edd0fd9344102d30d0"
-							]
-						}
+						"url": "{{BASE_URL}}/cas/b692f7569c182fadf1f3ecbb26d7bf129cc97d83c34b12edd0fd9344102d30d0"
 					},
 					"response": []
 				}
 			]
 		},
 		{
-			"name": "Register",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "email",
-							"value": "{{EMAIL}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{PASSWORD}}",
-							"type": "text"
-						},
-						{
-							"key": "name",
-							"value": "John",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/register",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Register test user",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "email",
-							"value": "{{TEST_USER_EMAIL}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{PASSWORD}}",
-							"type": "text"
-						},
-						{
-							"key": "name",
-							"value": "Johny",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/register",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Auth-token",
+			"name": "Get Auth-token bill user",
 			"event": [
 				{
 					"listen": "test",
@@ -487,30 +216,22 @@
 					"formdata": [
 						{
 							"key": "email",
-							"value": "{{EMAIL}}",
+							"value": "{{BILL_EMAIL}}",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "{{PASSWORD}}",
+							"value": "{{BILL_PASSWORD}}",
 							"type": "text"
 						}
 					]
 				},
-				"url": {
-					"raw": "{{BASE_URL}}/auth-token",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"auth-token"
-					]
-				}
+				"url": "{{BASE_URL}}/auth-token"
 			},
 			"response": []
 		},
 		{
-			"name": "Get Auth-token for test user",
+			"name": "Get Auth-token amendment user",
 			"event": [
 				{
 					"listen": "test",
@@ -534,25 +255,95 @@
 					"formdata": [
 						{
 							"key": "email",
-							"value": "{{TEST_USER_EMAIL}}",
+							"value": "{{AMENDMENT_EMAIL}}",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "{{PASSWORD}}",
+							"value": "{{AMENDMENT_PASSWORD}}",
 							"type": "text"
 						}
 					]
 				},
-				"url": {
-					"raw": "{{BASE_URL}}/auth-token",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"auth-token"
-					]
+				"url": "{{BASE_URL}}/auth-token"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Auth-token act user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"TOKEN\", jsonData.token);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
 				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{ACT_EMAIL}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{ACT_PASSWORD}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{BASE_URL}}/auth-token"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Auth-token statute user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"TOKEN\", jsonData.token);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{STATUTE_EMAIL}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{STATUTE_PASSWORD}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{BASE_URL}}/auth-token"
 			},
 			"response": []
 		}
