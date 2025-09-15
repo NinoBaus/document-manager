@@ -12,6 +12,9 @@ This application uses Postgres database that's running in docker container. This
 4. `$ make test`  this command will run docker compose to start database, and run the limited test suite via PyTest.
 5. `$ python manage.py create_user --email test@test.com --password 123456 --name "Test User"`  this command will allow you to create new user in database.
 
+### API Documentation
+Once the server is up and running, using endpoint `api/schema/swagger-ui/` we can see swagger documentation with all details on how to use API.
+
 ### Unittests
 You can run unittests with make file:
 `$ make test` This command will run the tests, but before that it will wait for database container to be started.
